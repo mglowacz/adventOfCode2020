@@ -21,4 +21,17 @@ public class FileInputSource {
         }
         return ints;
     }
+
+    public static List<String> getStrings(String path) throws IOException {
+        List<String> strings = new LinkedList<>();
+        try (InputStream is = FileInputSource.class.getResourceAsStream(path)) {
+            InputStreamReader inputStreamReader = new InputStreamReader(is);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                strings.add(line);
+            }
+        }
+        return strings;
+    }
 }
