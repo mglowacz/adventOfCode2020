@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
 
+import static java.lang.System.arraycopy;
+
 public class FileInputSource {
 
     public static List<Integer> getIntegers(String path) throws IOException {
@@ -33,5 +35,28 @@ public class FileInputSource {
             }
         }
         return strings;
+    }
+
+    public static char[][] getMap(String path) throws IOException {
+        List<String> lines = new LinkedList<>();
+        try (InputStream is = FileInputSource.class.getResourceAsStream(path)) {
+            InputStreamReader inputStreamReader = new InputStreamReader(is);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                lines.add(line);
+            }
+        }
+        char[][] view = new char[lines.size()][longestLineSize(lines)];
+        for (int i = 0 ; i < lines.size() ; i++) {
+            String line = lines.get(i);
+            arraycopy(line.toCharArray(), 0, view[i], 0, line.toCharArray().length);
+        }
+        return view;
+
+    }
+
+    private static int longestLineSize(List<String> lines) {
+        return lines.stream().map(String::length).max(Integer::compare).orElseThrow();
     }
 }
