@@ -22,4 +22,38 @@ public class Day5 {
         }
         assertEquals(974, maxId);
     }
+
+    @Test
+    public void part2() throws IOException {
+        char[][] seats = new char[127][8];
+        for (String seatCode : FileInputSource.getStrings("/day5/data")) {
+            int row = SeatIdResolver.getRow(seatCode);
+            int col = SeatIdResolver.getCol(seatCode);
+            seats[row][col] = 'x';
+        }
+
+        int rowNo = 0;
+        int colNo = 0;
+        boolean b = false;
+        x : for (char[] row : seats) {
+            if (!b && String.valueOf(row).equals("xxxxxxxx")) {
+                b = true;
+                rowNo++;
+                continue;
+            }
+            if (b && !String.valueOf(row).equals("xxxxxxxx")) {
+                for (char c : row) {
+                    if (c != 'x') {
+                        break x;
+                    }
+                    colNo++;
+                }
+            }
+            rowNo++;
+        }
+
+        assertEquals(646, rowNo * 8 + colNo);
+
+    }
+
 }
