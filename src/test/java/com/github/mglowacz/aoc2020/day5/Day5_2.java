@@ -7,18 +7,17 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class Day5 {
+public class Day5_2 {
     @Test
     public void test() {
-        assertEquals(357, SeatIdResolver.getId("FBFBBFFRLR"));
-
+        assertEquals(357, SeatIdResolver2.getId("FBFBBFFRLR"));
     }
 
     @Test
     public void data() throws IOException {
         int maxId = 0;
         for (String seatCode : FileInputSource.getStrings("/day5/data")) {
-            int id = SeatIdResolver.getId(seatCode);
+            int id = SeatIdResolver2.getId(seatCode);
             if (maxId < id) maxId = id;
         }
         assertEquals(974, maxId);
@@ -28,8 +27,8 @@ public class Day5 {
     public void part2() throws IOException {
         char[][] seats = new char[127][8];
         for (String seatCode : FileInputSource.getStrings("/day5/data")) {
-            int row = SeatIdResolver.getRow(seatCode);
-            int col = SeatIdResolver.getCol(seatCode);
+            int row = SeatIdResolver2.getRow(seatCode);
+            int col = SeatIdResolver2.getCol(seatCode);
             seats[row][col] = 'x';
         }
 
