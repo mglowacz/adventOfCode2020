@@ -37,4 +37,5 @@ public class Day6 {
         int sum = new FixedGroupParser(strings).getGroups().stream().map(Group::getGroupUniqueAnswersCount).reduce(Integer::sum).orElseThrow();
         assertEquals(3512, sum);
     }
+
 }
