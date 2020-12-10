@@ -11,6 +11,20 @@ import static java.lang.System.arraycopy;
 
 public class FileInputSource {
 
+    public static List<Long> getLongs(String path) throws IOException {
+        List<Long> longs = new LinkedList<>();
+        try (InputStream is = FileInputSource.class.getResourceAsStream(path)) {
+            InputStreamReader inputStreamReader = new InputStreamReader(is);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                longs.add(Long.parseLong(line));
+            }
+        }
+        return longs;
+    }
+
+
     public static List<Integer> getIntegers(String path) throws IOException {
         List<Integer> ints = new LinkedList<>();
         try (InputStream is = FileInputSource.class.getResourceAsStream(path)) {
