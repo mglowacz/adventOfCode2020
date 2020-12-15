@@ -41,6 +41,7 @@ public class Day13 {
 
     @Test
     public void data2() throws IOException {
+        //https://en.wikipedia.org/wiki/Chinese_remainder_theorem
         List<String> strings = FileInputSource.getStrings("/day13/data");
         int[] ids = Arrays.stream(strings.get(1).split(",")).map(s -> s.equals("x") ? "0" : s).map(Integer::parseInt).mapToInt(i -> i).toArray();
         assertEquals(780601154795940L, cong(ids, 1, ids[0], 0));
