@@ -152,7 +152,7 @@ public class Day20 {
             f++;
         }
 
-        assertEquals(273, c - monsterCount * 15);
+        assertEquals(2219, c - monsterCount * 15);
     }
 
     private List<Integer> findCorners(List<Tile> tiles) {
