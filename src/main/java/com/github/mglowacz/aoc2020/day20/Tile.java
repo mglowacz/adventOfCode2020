@@ -9,6 +9,7 @@ import static java.util.Arrays.asList;
 public class Tile {
     Integer number;
     List<String> borders;
+    char[][] map;
 
     private Tile() {
 
@@ -18,6 +19,7 @@ public class Tile {
         Tile tile = new Tile();
         tile.number = number;
         tile.borders = getTileBorders(map);
+        tile.map = map;
         return tile;
     }
 
@@ -41,6 +43,54 @@ public class Tile {
             tiles.add(tile);
         }
         return tiles;
+    }
+
+
+    private int flipIndex = 0;
+
+    public void flip() {
+        if (flipIndex % 4 == 0) flipSide();
+        else rotateLeft();
+        flipIndex++;
+    }
+
+    private void rotateLeft() {
+        this.borders = new LinkedList<>(asList(
+                borders.get(2), //top - right
+                new StringBuilder(borders.get(0)).reverse().toString(),//left - reversed top
+                new StringBuilder(borders.get(3)).reverse().toString(), //right - reversed bottom
+                borders.get(1) //bottom - left
+        ));
+
+        map = rotateLeftMap(map);
+    }
+
+    static char[][] rotateLeftMap(char[][] map) {
+        char[][] map2 = new char[map.length][map[0].length];
+        for(int j = 0 ; j < map2.length ; j++)
+            for(int i = 0 ; i < map2[0].length ; i++) {
+                map2[j][i] = map[i][map2.length - 1 - j];
+            }
+        return map2;
+    }
+
+    private void flipSide() {
+        this.borders = new LinkedList<>(asList(
+                new StringBuilder(borders.get(0)).reverse().toString(), //top - reversed top
+                borders.get(2), //left - right
+                borders.get(1), //right - left
+                new StringBuilder(borders.get(3)).reverse().toString() //bottom - reversed bottom
+        ));
+        map = flipSideMap(map);
+    }
+
+    static char[][] flipSideMap(char[][] map) {
+        char[][] map2 = new char[map.length][map[0].length];
+        for(int j = 0 ; j < map2.length ; j++)
+            for(int i = 0 ; i < map2[0].length ; i++) {
+                map2[j][i] = map[j][map2.length - 1 - i];
+            }
+        return map2;
     }
 
 }
